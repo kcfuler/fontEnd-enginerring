@@ -1,0 +1,1 @@
+(()=>{console.log("vue"),console.log("react");const e=document.createElement("h1");e.innerText="Hello Vue",document.body.append(e)})();
