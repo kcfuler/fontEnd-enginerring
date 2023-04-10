@@ -2,6 +2,8 @@ const { promisify } = require("util");
 const downLoad = promisify(require("download-git-repo"));
 const { VUE_REPO } = require("../config/repo");
 const execCommand = require("../utils/exec-command");
+const { compileEjs } = require("../utils/compile-ejs");
+const { writeFile } = require("../utils/write-file");
 
 async function createProjectAction(project) {
   try {
@@ -21,6 +23,16 @@ async function createProjectAction(project) {
   }
 }
 
+async function addComponentAction(cpnName) {
+  console.log("this is cpn name", cpnName);
+  // 1. 将参数传入, 替换模板
+  const result = await compileEjs("Header.vue.ejs", { name: cpnName });
+  // 2. 将文件写入
+  writeFile(`src/components/${cpnName}.vue`, result);
+  console.log("创建组件成功", cpnName + ".vue");
+}
+
 module.exports = {
   createProjectAction,
+  addComponentAction,
 };
